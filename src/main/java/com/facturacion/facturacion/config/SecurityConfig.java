@@ -60,6 +60,7 @@ public class SecurityConfig {
 
                 .authorizeExchange(auth -> auth
                         .pathMatchers("/auth/**").permitAll()
+                        .pathMatchers("/actuator/health").permitAll()
 
                         // CLIENTS
                         .pathMatchers("/clients/**").hasAnyRole("ADMIN", "USER")
