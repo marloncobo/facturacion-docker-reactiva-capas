@@ -10,27 +10,26 @@ services:
     ports:
       - "8080:8080"
     environment:
-      # 2. Cambiamos el protocolo de conexión de 'jdbc' a 'r2dbc'
-      DATABASE_URL: r2dbc:mysql://db:3306/facturacion
+      # 2. Cambiamos el protocolo de conexión de 'jdbc' a 'r2dbc' y usamos postgresql
+      DATABASE_URL: r2dbc:postgresql://db:5432/facturacion
       DATABASE_USERNAME: user
       DATABASE_PASSWORD: password
     depends_on:
       - db
 
   db:
-    # 3. Es buena práctica ponerle nombre a la imagen de la BD si no quieres que sea genérica
-    image: mysql:8.0
+    # 3. Usamos PostgreSQL en lugar de MySQL
+    image: postgres:15-alpine
     container_name: facturacion-db-webflux
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: facturacion
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      POSTGRES_DB: facturacion
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
     ports:
-      - "3307:3306"
+      - "5432:5432"
     volumes:
-      - db_data_webflux:/var/lib/mysql
+      - db_data_webflux:/var/lib/postgresql/data
 
 volumes:
   db_data_webflux:
