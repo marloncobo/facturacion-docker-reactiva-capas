@@ -3,11 +3,11 @@ spring:
     init:
       mode: always
   r2dbc:
-    url: r2dbc:mysql://db:3306/facturacion
-    username: user
-    password: password
+    url: ${DATABASE_URL:r2dbc:mysql://db:3306/facturacion}
+    username: ${DATABASE_USERNAME:user}
+    password: ${DATABASE_PASSWORD:password}
   main:
     web-application-type: reactive
 
 server:
-  port: 8080
+  port: ${PORT:8080}
